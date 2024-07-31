@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator in C++</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        .input-fields {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+    <script>
+        var Module = {
+            onRuntimeInitialized: function() {
+                // Create JavaScript wrappers for the exported functions
+                const add = Module.cwrap('add', 'number', ['number', 'number']);
+                const subtract = Module.cwrap('subtract', 'number', ['number', 'number']);
+                const multiply = Module.cwrap('multiply', 'number', ['number', 'number']);
+                const divide = Module.cwrap('divide', 'number', ['number', 'number']);
+                const power = Module.cwrap('power', 'number', ['number', 'number']);
+                const logarithm = Module.cwrap('logarithm', 'number', ['number', 'number']);
+                const sin = Module.cwrap('rsin', 'number', ['number']);
+                const cos = Module.cwrap('rcos', 'number', ['number']);
+                const tan = Module.cwrap('rtan', 'number', ['number']);
+                const arcsin = Module.cwrap('arcsin', 'number', ['number']);
+                const arccos = Module.cwrap('arccos', 'number', ['number']);
+                const arctan = Module.cwrap('arctan', 'number', ['number']);
+
+                let stored_op = 'null';
+                // Function to handle calculations and display results
+                function calculate_2i(operation) {
+                    let a;
+                    let b;
+                    if (document.getElementById('num1').value === 'e') {
+                        a = Math.E;
+                    }
+                    else if (document.getElementById('num1').value === 'pi') {
+                        a = Math.PI;
+                    }
+                    else {
+                        a = parseFloat(document.getElementById('num1').value);
+                    }
+                    if (document.getElementById('num2').value === 'e') {
+                        b = Math.E;
+                    }
+                    else if (document.getElementById('num2').value === 'pi') {
+                        b = Math.PI;
+                    }
+                    else {
+                        b = parseFloat(document.getElementById('num2').value);
+                    }
+                    if (isNaN(a) || isNaN(b)) {
+                        document.getElementById('calculateBtn').innerText = "Please enter valid numbers";
+                        return;
+                    }
+                    let result;
+                    switch (operation) {
+                        case 'add':
+                            result = add(a, b);
+                            break;
+                        case 'subtract':
+                            result = subtract(a, b);
+                            break;
+                        case 'multiply':
+                            result = multiply(a, b);
+                            break;
+                        case 'divide':
+                            result = divide(a, b);
+                            break;
+                        case 'power':
+                            result = power(a, b);
+                            break;
+                        case 'logarithm':
+                            result = logarithm(a, b);
+                            break;
+                    }
+                    stored_op = operation;
+                    document.getElementById('calculateBtn').innerText = "Result: " + result;
+                }
+
+                function calculate_1i(operation) {
+                    let a;
+                    if (document.getElementById('num1').value === 'e') {
+                        a = Math.E;
+                    }
+                    else if (document.getElementById('num1').value === 'pi') {
+                        a = Math.PI;
+                    }
+                    else {
+                        a = parseFloat(document.getElementById('num1').value);
+                    }
+                    if (isNaN(a)) {
+                        document.getElementById('calculateBtn').innerText = "Please enter valid number";
+                        return;
+                    }
+                    let result;
+                    switch (operation) {
+                        case 'sin':
+                            result = sin(a);
+                            break;
+                        case 'cos':
+                            result = cos(a);
+                            break;
+                        case 'tan':
+                            result = tan(a);
+                            break;
+                        case 'arcsin':
+                            result = arcsin(a);
+                            break;
+                        case 'arccos':
+                            result = arccos(a);
+                            break;
+                        case 'arctan':
+                            result = arctan(a);
+                            break;
+                    }
+                    stored_op = operation;
+                    document.getElementById('calculateBtn').innerText = "Result: " + result;
+                }
+
+                // Function to show input fields
+                function showBothInputs(operation) {
+                    document.getElementById('num1').style.visibility = 'visible';
+                    document.getElementById('num2').style.display = "block";
+                    document.getElementById('num2').style.visibility = 'visible';
+                    document.getElementById('calculateBtn').style.visibility = 'visible';
+                    document.getElementById('calculateBtn').onclick = function() {
+                        calculate_2i(operation);
+                    }
+                }
+                function showOneInput(operation) {
+                    document.getElementById('num1').style.visibility = "visible";
+                    document.getElementById('num2').style.display = "none";
+                    document.getElementById('calculateBtn').style.visibility = 'visible';
+                    document.getElementById('calculateBtn').onclick = function() {
+                        calculate_1i(operation);
+                    }
+                }
+
+                // Function to reset button colors
+                function resetButtonColors() {
+                    var buttons = document.querySelectorAll('.operations button');
+                    buttons.forEach(function(button) {
+                        button.classList.remove('active-button');
+                    });
+                }
+
+                // Add event listeners to buttons
+                document.getElementById('addBtn').addEventListener('click', function() {
+                    if ('add' !== stored_op) {document.getElementById('calculateBtn').innerText = "Calculate";}
+                    resetButtonColors();
+                    this.classList.add('active-button');
+                    showBothInputs('add');
+                });
+
+                document.getElementById('subtractBtn').addEventListener('click', function() {
+                    if ('subtract' !== stored_op) {document.getElementById('calculateBtn').innerText = "Calculate";}
+                    resetButtonColors();
+                    this.classList.add('active-button');
+                    showBothInputs('subtract');
+                });
+
+                document.getElementById('multiplyBtn').addEventListener('click', function() {
+                    if ('multiply' !== stored_op) {document.getElementById('calculateBtn').innerText = "Calculate";}
+                    resetButtonColors();
+                    this.classList.add('active-button');
+                    showBothInputs('multiply');
+                });
+
+                document.getElementById('divideBtn').addEventListener('click', function() {
+                    if ('divide' !== stored_op) {document.getElementById('calculateBtn').innerText = "Calculate";}
+                    resetButtonColors();
+                    this.classList.add('active-button');
+                    showBothInputs('divide');
+                });
+
+                document.getElementById('powerBtn').addEventListener('click', function() {
+                    if ('power' !== stored_op) {document.getElementById('calculateBtn').innerText = "Calculate";}
+                    resetButtonColors();
+                    this.classList.add('active-button');
+                    showBothInputs('power');
+                });
+
+                document.getElementById('logarithmBtn').addEventListener('click', function() {
+                    if ('logarithm' !== stored_op) {document.getElementById('calculateBtn').innerText = "Calculate";}
+                    resetButtonColors();
+                    this.classList.add('active-button');
+                    showBothInputs('logarithm');
+                });
+
+                document.getElementById('sinBtn').addEventListener('click', function() {
+                    if ('sin' !== stored_op) {document.getElementById('calculateBtn').innerText = "Calculate";}
+                    resetButtonColors();
+                    this.classList.add('active-button');
+                    showOneInput('sin');
+                });
+
+                document.getElementById('cosBtn').addEventListener('click', function() {
+                    if ('cos' !== stored_op) {document.getElementById('calculateBtn').innerText = "Calculate";}
+                    resetButtonColors();
+                    this.classList.add('active-button');
+                    showOneInput('cos');
+                });
+
+                document.getElementById('tanBtn').addEventListener('click', function() {
+                    if ('tan' !== stored_op) {document.getElementById('calculateBtn').innerText = "Calculate";}
+                    resetButtonColors();
+                    this.classList.add('active-button');
+                    showOneInput('tan');
+                });
+
+                document.getElementById('arcsinBtn').addEventListener('click', function() {
+                    if ('arcsin' !== stored_op) {document.getElementById('calculateBtn').innerText = "Calculate";}
+                    resetButtonColors();
+                    this.classList.add('active-button');
+                    showOneInput('arcsin');
+                });
+
+                document.getElementById('arccosBtn').addEventListener('click', function() {
+                    if ('arccos' !== stored_op) {document.getElementById('calculateBtn').innerText = "Calculate";}
+                    resetButtonColors();
+                    this.classList.add('active-button');
+                    showOneInput('arccos');
+                });
+
+                document.getElementById('arctanBtn').addEventListener('click', function() {
+                    if ('arctan' !== stored_op) {document.getElementById('calculateBtn').innerText = "Calculate";}
+                    resetButtonColors();
+                    this.classList.add('active-button');
+                    showOneInput('arctan');
+                });
+
+                var inputFields = document.querySelectorAll('.input-fields input');
+                inputFields.forEach(function(input) {
+                    input.addEventListener('input', function() {
+                        document.getElementById('calculateBtn').innerText = "Calculate";
+                    });
+                });
+            }
+        };
+    </script>
+    <script src="src/calculator.js"></script>
+</head>
+<body>
+    <h1>Calculator in C++</h1>
+    <div class="input-fields">
+        <input type="text" id="num1" placeholder="Enter number" style="visibility:hidden;">
+        <input type="text" id="num2" placeholder="Enter number" style="display:none;">
+    </div>
+    <div class="operations">
+        <button id="addBtn">Add</button>
+        <button id="subtractBtn">Subtract</button>
+        <button id="multiplyBtn">Multiply</button>
+        <button id="divideBtn">Divide</button>
+        <button id="powerBtn">Power</button>
+        <button id="logarithmBtn">Logarithm</button>
+        <button id="sinBtn">Sin</button>
+        <button id="cosBtn">Cos</button>
+        <button id="tanBtn">Tan</button>
+        <button id="arcsinBtn">Arcsin</button>
+        <button id="arccosBtn">Arccos</button>
+        <button id="arctanBtn">Arctan</button>
+    </div>
+    <button id="calculateBtn" style="visibility:hidden;">Calculate</button>
+</body>
+</html>
