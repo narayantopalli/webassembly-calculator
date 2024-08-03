@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html manifest="cache.manifest">
 <head>
+    <script type="text/javascript" src="update_cache.js"></script>
     <title>Calculator in C++</title>
-    <link rel="stylesheet" type="text/css" href="styles.css?version=1">
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <style>
         .input-fields {
             display: flex;
@@ -241,7 +242,7 @@
     </script>
     <script src="src/calculator.js"></script>
 </head>
-<body>
+<body onload="checkForUpdate()">
     <h1>Calculator in C++</h1>
     <div class="input-fields">
         <input type="text" id="num1" placeholder="Enter number" style="visibility:hidden;">

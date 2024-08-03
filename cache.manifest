@@ -1,0 +1,5 @@
+CACHE MANIFEST
+# version 0.01
+style.css
+src/calculator.js
+src/calculator.wasm
