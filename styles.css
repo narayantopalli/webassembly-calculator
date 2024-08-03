@@ -36,7 +36,6 @@ button {
     color: white;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
 #calculateBtn {
@@ -65,6 +64,10 @@ button:hover {
 .active-button {
     background-color: #2ad29a;
     color: white;
+}
+
+.active-button:hover {
+    background-color: #2ad29a;
 }
 
 p#result {

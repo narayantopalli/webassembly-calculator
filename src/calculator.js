@@ -977,7 +977,6 @@ function dbg(...args) {
       return func;
     };
   
-  
   var writeArrayToMemory = (array, buffer) => {
       assert(array.length >= 0, 'writeArrayToMemory array must have a length (should be an array or typed array)')
       HEAP8.set(array, buffer);
@@ -1198,6 +1197,8 @@ function dbg(...args) {
       ret = onDone(ret);
       return ret;
     };
+
+  
   
     /**
      * @param {string=} returnType
@@ -1207,8 +1208,6 @@ function dbg(...args) {
   var cwrap = (ident, returnType, argTypes, opts) => {
       return (...args) => ccall(ident, returnType, argTypes, args, opts);
     };
-
-
 function checkIncomingModuleAPI() {
   ignoredModuleProp('fetchSettings');
 }
@@ -1217,18 +1216,42 @@ var wasmImports = {
 };
 var wasmExports = createWasm();
 var ___wasm_call_ctors = createExportWrapper('__wasm_call_ctors', 0);
-var _add = Module['_add'] = createExportWrapper('add', 2);
-var _subtract = Module['_subtract'] = createExportWrapper('subtract', 2);
-var _multiply = Module['_multiply'] = createExportWrapper('multiply', 2);
-var _divide = Module['_divide'] = createExportWrapper('divide', 2);
-var _power = Module['_power'] = createExportWrapper('power', 2);
-var _logarithm = Module['_logarithm'] = createExportWrapper('logarithm', 2);
-var _rsin = Module['_rsin'] = createExportWrapper('rsin', 1);
-var _rcos = Module['_rcos'] = createExportWrapper('rcos', 1);
-var _rtan = Module['_rtan'] = createExportWrapper('rtan', 1);
-var _arcsin = Module['_arcsin'] = createExportWrapper('arcsin', 1);
-var _arccos = Module['_arccos'] = createExportWrapper('arccos', 1);
-var _arctan = Module['_arctan'] = createExportWrapper('arctan', 1);
+var _add_int = Module['_add_int'] = createExportWrapper('add_int', 2);
+var _add_long = Module['_add_long'] = createExportWrapper('add_long', 2);
+var _add_float = Module['_add_float'] = createExportWrapper('add_float', 2);
+var _add_double = Module['_add_double'] = createExportWrapper('add_double', 2);
+var _subtract_int = Module['_subtract_int'] = createExportWrapper('subtract_int', 2);
+var _subtract_long = Module['_subtract_long'] = createExportWrapper('subtract_long', 2);
+var _subtract_float = Module['_subtract_float'] = createExportWrapper('subtract_float', 2);
+var _subtract_double = Module['_subtract_double'] = createExportWrapper('subtract_double', 2);
+var _multiply_int = Module['_multiply_int'] = createExportWrapper('multiply_int', 2);
+var _multiply_long = Module['_multiply_long'] = createExportWrapper('multiply_long', 2);
+var _multiply_float = Module['_multiply_float'] = createExportWrapper('multiply_float', 2);
+var _multiply_double = Module['_multiply_double'] = createExportWrapper('multiply_double', 2);
+var _divide_int = Module['_divide_int'] = createExportWrapper('divide_int', 2);
+var _divide_long = Module['_divide_long'] = createExportWrapper('divide_long', 2);
+var _divide_float = Module['_divide_float'] = createExportWrapper('divide_float', 2);
+var _divide_double = Module['_divide_double'] = createExportWrapper('divide_double', 2);
+var _power_int = Module['_power_int'] = createExportWrapper('power_int', 2);
+var _power_long = Module['_power_long'] = createExportWrapper('power_long', 2);
+var _power_float = Module['_power_float'] = createExportWrapper('power_float', 2);
+var _power_double = Module['_power_double'] = createExportWrapper('power_double', 2);
+var _logarithm_int = Module['_logarithm_int'] = createExportWrapper('logarithm_int', 2);
+var _logarithm_long = Module['_logarithm_long'] = createExportWrapper('logarithm_long', 2);
+var _logarithm_float = Module['_logarithm_float'] = createExportWrapper('logarithm_float', 2);
+var _logarithm_double = Module['_logarithm_double'] = createExportWrapper('logarithm_double', 2);
+var _rsin_float = Module['_rsin_float'] = createExportWrapper('rsin_float', 1);
+var _rsin_double = Module['_rsin_double'] = createExportWrapper('rsin_double', 1);
+var _rcos_float = Module['_rcos_float'] = createExportWrapper('rcos_float', 1);
+var _rcos_double = Module['_rcos_double'] = createExportWrapper('rcos_double', 1);
+var _rtan_float = Module['_rtan_float'] = createExportWrapper('rtan_float', 1);
+var _rtan_double = Module['_rtan_double'] = createExportWrapper('rtan_double', 1);
+var _arcsin_float = Module['_arcsin_float'] = createExportWrapper('arcsin_float', 1);
+var _arcsin_double = Module['_arcsin_double'] = createExportWrapper('arcsin_double', 1);
+var _arccos_float = Module['_arccos_float'] = createExportWrapper('arccos_float', 1);
+var _arccos_double = Module['_arccos_double'] = createExportWrapper('arccos_double', 1);
+var _arctan_float = Module['_arctan_float'] = createExportWrapper('arctan_float', 1);
+var _arctan_double = Module['_arctan_double'] = createExportWrapper('arctan_double', 1);
 var _fflush = createExportWrapper('fflush', 1);
 var _emscripten_stack_init = () => (_emscripten_stack_init = wasmExports['emscripten_stack_init'])();
 var _emscripten_stack_get_free = () => (_emscripten_stack_get_free = wasmExports['emscripten_stack_get_free'])();
@@ -1242,9 +1265,8 @@ var _emscripten_stack_get_current = () => (_emscripten_stack_get_current = wasmE
 // include: postamble.js
 // === Auto-generated postamble setup entry stuff ===
 
+Module['ccall'] = ccall;
 Module['cwrap'] = cwrap;
-Module['UTF8ToString'] = UTF8ToString;
-Module['stringToUTF8'] = stringToUTF8;
 var missingLibrarySymbols = [
   'writeI53ToI64',
   'writeI53ToI64Clamped',
@@ -1465,7 +1487,6 @@ var unexportedSymbols = [
   'wasmTable',
   'noExitRuntime',
   'getCFunc',
-  'ccall',
   'freeTableIndexes',
   'functionsInTableMap',
   'setValue',
@@ -1474,7 +1495,9 @@ var unexportedSymbols = [
   'PATH_FS',
   'UTF8Decoder',
   'UTF8ArrayToString',
+  'UTF8ToString',
   'stringToUTF8Array',
+  'stringToUTF8',
   'lengthBytesUTF8',
   'UTF16Decoder',
   'stringToUTF8OnStack',
