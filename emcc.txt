@@ -1,0 +1,1 @@
+emcc calculator.cpp -o calculator.js -std=c++23 -s EXPORTED_FUNCTIONS="['_add', '_subtract', '_multiply', '_divide', '_power', '_logarithm', '_rsin', '_rcos', '_rtan', '_arcsin', '_arccos', '_arctan']" -s EXPORTED_RUNTIME_METHODS="['ccall', 'cwrap']"
